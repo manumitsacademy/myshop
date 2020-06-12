@@ -6,7 +6,7 @@ const ProductPage = () => {
     return (
         <div>
             <h1>Products Page</h1>
-            <Link to="/products/addProduct">Add Product</Link>
+            <Link to="/products/addProduct" className="btn btn-success">Add Product</Link>
             <Link to="/products/viewProducts">View Products</Link>
             <Route path="/products/addProduct">
                 <AddProduct></AddProduct>

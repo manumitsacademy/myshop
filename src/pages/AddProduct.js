@@ -1,6 +1,7 @@
 import React,{useRef} from 'react';
 
 const AddProduct = () => {
+    document.title = 'Add products'
 
     const productName = useRef();
 	const productPrice = useRef();
@@ -10,11 +11,9 @@ const AddProduct = () => {
 	const productBrand = useRef();
 	const productQuantity = useRef();
 	const productSupplier = useRef();
-    const productAvailability = useRef();
     const productDescription = useRef();
     const productColor = useRef();
     const productSize = useRef();
-    const productArea = useRef();
 
     const addProduct = (e)=>{
         e.preventDefault();
@@ -42,6 +41,19 @@ const AddProduct = () => {
         .then((res)=>res.json())
         .then((data)=>{console.log(data)})
 
+        // Reset fields after submit
+        productName.current.value ="";
+        productPrice.current.value ="";
+        productImage.current.value ="";
+        productCategory.current.value ="";
+        productSubCategory.current.value ="";
+        productBrand.current.value ="";
+        productQuantity.current.value ="";
+        productSupplier.current.value ="";
+        productDescription.current.value ="";
+        productColor.current.value ="";
+        productSize.current.value ="";
+
     }
     const resetAllFields=()=>{
 
@@ -53,11 +65,9 @@ const AddProduct = () => {
         productBrand.current.value ="";
         productQuantity.current.value ="";
         productSupplier.current.value ="";
-        productAvailability.current.value ="";
         productDescription.current.value ="";
         productColor.current.value ="";
         productSize.current.value ="";
-        productArea.current.value ="";
     }
     
     return ( 
@@ -138,6 +148,10 @@ const AddProduct = () => {
                             <option>Red</option>
                             <option>White</option>
                             <option>Green</option>
+                            <option>Blue</option>
+                            <option>Yellow</option>
+                            <option>Orange</option>
+                            <option>Violent</option>
                         </select>
                         
                     </div>

@@ -29,7 +29,7 @@ const ProductsList = () => {
                                     <img className="card-img-top" src={p.productImage} alt={p.productName} />
                                     <div className="card-body">
                                     <h4 className="card-title" title={p.productName}>{p.productName}</h4>
-                                    <p className="product-price">Rs. {numberFormat(p.productPrice)}/-</p>
+                                    <p className="product-price">{numberFormat(p.productPrice)}/-</p>
                                     <p className="card-text">Some example text some example text. John Doe is an architect and engineer</p>
                                     <Link to={{pathname:"/productDetails",state:p}} className="btn btn-primary btn-sm">View More</Link>
                                     <div className="product-actions">

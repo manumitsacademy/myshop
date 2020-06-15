@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-const Header = () => {
+const Header = (props) => {    
     return (
-        <nav className="navbar navbar-expand-sm bg-danger navbar-dark mb-4">
+        <nav className="navbar navbar-expand-sm bg-danger navbar-dark">
             
             <div className="logo">
                 <Link className="navbar-brand" to="/">Company Logo</Link>
@@ -39,8 +40,8 @@ const Header = () => {
                 <div className="profile ml-auto">
                     <ul>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/cart">Cart</Link>
-                            <span className="cart-count">{0}</span>
+                            <Link className="nav-link" to="/cart"><span><i class="fas fa-shopping-cart"></i></span>Cart</Link>
+                            <span className="cart-count">{props.CartReducer.length}</span>
                         </li>
                         <li className="nav-item dropdown">
                             <Link className="nav-link dropdown-toggle" to="#" id="navbardrop" data-toggle="dropdown">
@@ -58,5 +59,8 @@ const Header = () => {
         </nav>
     );
 };
-
-export default Header;
+function mapStateToProps(store){
+    // console.log(store)
+    return store
+}
+export default connect(mapStateToProps)(Header);

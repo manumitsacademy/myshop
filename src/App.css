@@ -1,3 +1,13 @@
+/*--- Common Css ---*/
+.content {
+  margin-top: 80px;
+}
+
+img {
+  width: 100%;
+}
+
+
 /*--- Header ---*/
 
 .logo {
@@ -41,6 +51,9 @@ a.nav-link:active {
 .profile ul li:first-child {
     margin-right: 30px;
 }
+.profile ul li a span {
+  margin-right: 10px;
+}
 span.cart-count {
     position: absolute;
     top: -10px;
@@ -76,6 +89,10 @@ span.cart-count:hover {
     color: #fff;
     transition: all 0.5s;
 }
+
+
+
+/*--- Products and Products List page---*/
 
 .title-block {
   width: 100%;
@@ -160,6 +177,46 @@ img.card-img-top {
   line-height: 35px;
   text-align: center;
 }
+
+
+
+/*--- Product Details ---*/
+
+.pd-image {
+  text-align: center;
+}
+.pd-image img {
+  width: 400px;
+  margin: auto;
+  max-height: 410px;
+}
+.pd-actions {
+  text-align: center;
+  margin-top: 20px;
+}
+ul.pd-more {
+  display: block;
+  list-style-type: circle;
+  padding-left: 18px;
+  margin: 0px;
+}
+ul.pd-more li b {
+  min-width: 140px;
+  display: inline-block;
+}
+p.pd-price {
+  position: relative;
+  color: #dc3545;
+  font-weight: 700;
+}
+p.pd-price img {
+  width: 35px;
+  transform: rotate(81deg);
+  position: absolute;
+  top: 12px;
+  left: -23px;
+}
+
 
 
 

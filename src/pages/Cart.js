@@ -4,7 +4,7 @@ import './Cart.css';
 import { connect } from 'react-redux'
 const Cart = (props) => {
     const items = props.CartReducer;
-
+    console.log(items)
     // Number local string  formater
     const numberFormat = (value) =>
     new Intl.NumberFormat('en-IN', {
@@ -14,10 +14,7 @@ const Cart = (props) => {
 
     // 
     const { state:details} = useLocation();
-    useEffect(()=>{
-        props.dispatch({type:'ADD_TO_CART',payload:details})
-    },[])
-    
+   
     return (
         <div className="container-fluid p-0">
             <div className="title-block">
@@ -56,19 +53,22 @@ const Cart = (props) => {
                                     </thead>
                                     <tbody>
                                         {
-                                            items.map((p) => {
-                                                return (
-                                                    <tr key={p._id.$oid}>
-                                                        <td><img className="img-thumbnail" src={p.productImage} alt={p.productName}/></td>
-                                                        <td>{p.productName}</td>
-                                                        <td>{0}</td>
-                                                        <td>{numberFormat(p.productPrice)}</td>
-                                                        <td>{numberFormat(p.productPrice)}</td>
-                                                        <td><button className="btn btn-success" data-index={p._id.$oid} ><i className="fas fa-plus-circle"></i></button></td>
-                                                        <td><button className="btn btn-danger" data-index={p._id.$oid} disabled={!(p.productPrice)} ><i className="fas fa-trash"></i></button></td>
-                                                    </tr>
-                                                );
-                                            })
+                                            items.products?
+                                                items.products.map((p) => {
+                                                    return (
+                                                        <tr key={p._id.$oid}>
+                                                            <td><img className="img-thumbnail" src={p.productImage} alt={p.productName}/></td>
+                                                            <td>{p.productName}</td>
+                                                            <td>{0}</td>
+                                                            <td>{numberFormat(p.productPrice)}</td>
+                                                            <td>{numberFormat(p.productPrice)}</td>
+                                                            <td><button className="btn btn-success" data-index={p._id.$oid} ><i className="fas fa-plus-circle"></i></button></td>
+                                                            <td><button className="btn btn-danger" data-index={p._id.$oid} disabled={!(p.productPrice)} ><i className="fas fa-trash"></i></button></td>
+                                                        </tr>
+                                                    );
+                                                })
+                                            :(<h1>Please aagu</h1>)
+                                            
                                         }
                                     </tbody>
                                 </table>

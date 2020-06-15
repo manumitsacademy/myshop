@@ -41,7 +41,7 @@ const Header = (props) => {
                     <ul>
                         <li className="nav-item">
                             <Link className="nav-link" to="/cart"><span><i class="fas fa-shopping-cart"></i></span>Cart</Link>
-                            <span className="cart-count">{props.CartReducer.length}</span>
+                            <span className="cart-count">{props.CartReducer.products.length}</span>
                         </li>
                         <li className="nav-item dropdown">
                             <Link className="nav-link dropdown-toggle" to="#" id="navbardrop" data-toggle="dropdown">

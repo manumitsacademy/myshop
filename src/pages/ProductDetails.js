@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import { useLocation,Link } from 'react-router-dom';
-const ProductDetails = () => {
+const ProductDetails = (props) => {
     var {state:details} = useLocation();
+    console.log(props)
     return (
         <div className="container-fluid p-0">
             <div className="title-block">
@@ -21,10 +23,17 @@ const ProductDetails = () => {
                         <div className="pd-image">
                             <img className="img-thumbnail" src={details.productImage}  alt={details.productName}/>
                         </div>
-                        <div className="pd-actions">
-                            <Link to={{pathname:"/cart",state:details}} className="btn btn-info mr-2">Add To Cart</Link>
-                            <Link to={{pathname:"/checkout",state:details}} className="btn btn-secondary">Buy Now</Link>
-                        </div>
+                        {
+                            props.CartReducer.cartStatus?
+                            (<div className="pd-actions">
+                            <button className="btn btn-info mr-2" onClick={()=>{props.handleAddToCart(details)}}>Add To Cart</button>
+                                <Link to={{pathname:"/checkout",state:details}} className="btn btn-secondary">Buy Now</Link>
+                            </div>):
+                            (
+                                <h1>Please Wait!!!...</h1>
+                            )
+                        }
+                        
                     </div>
                     <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div className="pd-details">
@@ -48,5 +57,17 @@ const ProductDetails = () => {
         </div>
     );
 };
-
-export default ProductDetails;
+function mapStateToProps(store){
+    return store
+}
+function mapDispatchToProps(dispatch){
+    return {
+        handleAddToCart:function(d){
+            dispatch({type:'CHANGE_CART_STATUS'})
+            setTimeout(()=>{
+                dispatch({type:'ADD_TO_CART',payload:d})
+            },2000)
+        }
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(ProductDetails);

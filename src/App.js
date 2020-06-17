@@ -7,10 +7,12 @@ import AddProduct from './pages/AddProduct';
 import ProductsList from './pages/ProductsList';
 import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
-import {createStore } from 'redux';
+import {createStore,applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import Reducer from './reducers/Reducer';
-const store = new createStore(Reducer)
+import thunk from 'redux-thunk'
+import EditProductPage from './pages/EditProductPage';
+const store = new createStore(Reducer,applyMiddleware(thunk))
 function App() {
   return (
     <Provider store={store}>
@@ -32,6 +34,9 @@ function App() {
               </Route>
               <Route path="/productDetails">
                 <ProductDetails></ProductDetails>
+              </Route>
+              <Route path="/editProduct">
+                <EditProductPage></EditProductPage>
               </Route>
               <Route path="/cart">
                 <Cart></Cart>

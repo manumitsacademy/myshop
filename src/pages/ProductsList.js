@@ -32,6 +32,7 @@ const ProductsList = () => {
                                     <p className="product-price">{numberFormat(p.productPrice)}/-</p>
                                     <p className="card-text">Some example text some example text. John Doe is an architect and engineer</p>
                                     <Link to={{pathname:"/productDetails",state:p}} className="btn btn-primary btn-sm">View More</Link>
+                                    <Link to={{pathname:"/editProduct",state:p}} className="btn btn-warning btn-sm">Edit</Link>
                                     <div className="product-actions">
                                           <ul>
                                             <li title="Add to Cart"><i className="fas fa-cart-plus"></i></li>

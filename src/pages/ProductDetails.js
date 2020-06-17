@@ -30,7 +30,12 @@ const ProductDetails = (props) => {
                                 <Link to={{pathname:"/checkout",state:details}} className="btn btn-secondary">Buy Now</Link>
                             </div>):
                             (
-                                <h1>Please Wait!!!...</h1>
+                                <div className="spinner">
+                                    <button className="btn btn-primary">
+                                        <span className="spinner-border spinner-border-sm"></span>
+                                        Loading...
+                                    </button>
+                                </div>
                             )
                         }
                         

@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom'
 import './Cart.css';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+
 const Cart = (props) => {
     const items = props.CartReducer;
     console.log(items)
@@ -12,7 +13,6 @@ const Cart = (props) => {
         currency: 'INR'
     }).format(value);
 
-    // 
     const { state:details} = useLocation();
    
     return (

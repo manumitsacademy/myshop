@@ -122,23 +122,7 @@ const AddProduct = () => {
                         <input type="text" className="form-control" ref={productSupplier} placeholder="Enter Product Supplier" id="productSupplier"/>
                     </div>
                 </div>
-                {/* <div className="col-lg-4">
-                    <div className="form-group">
-                        <label >Product Availability:</label>
-                        <div className="input-group">
-                            <div className="form-check-inline">
-                                <label className="form-check-label">
-                                    <input type="radio" ref={productAvailability} className="form-check-input" name="optradio" value={true}/>true
-                                </label>
-                                </div>
-                                <div className="form-check-inline">
-                                <label className="form-check-label">
-                                    <input type="radio" ref={productAvailability} className="form-check-input" name="optradio" value={false}/>false
-                                </label>
-                            </div>
-                        </div>                       
-                    </div>
-                </div> */}
+                
                 <div className="col-lg-4">
                     <div className="form-group">
                         <label >Product Color:</label>
@@ -169,29 +153,7 @@ const AddProduct = () => {
                         </select>
                     </div>
                 </div>
-                {/* <div className="col-lg-4">
-                    <div className="form-group">
-                        <label >Product Available Areas:</label>
-                        <div className="input-group form-check-inline1">
-                        <div className="form-check-inline">
-                            <label className="form-check-label">
-                                <input type="checkbox" ref={productArea} className="form-check-input" /> Hyderabad
-                            </label>
-                        </div>
-                        <div className="form-check-inline">
-                            <label className="form-check-label">
-                                <input type="checkbox" ref={productArea} className="form-check-input" /> Vijayavada
-                            </label>
-                        </div>
-                        <div className="form-check-inline">
-                            <label className="form-check-label">
-                                <input type="checkbox" ref={productArea} className="form-check-input" /> Visakapatnam
-                            </label>
-                        </div>
-                        </div>
-                       
-                    </div>
-                </div> */}
+                
                 <div className="col-lg-4">
                     <div className="form-group">
                         <label >Product Description:</label>

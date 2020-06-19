@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
-
-const ProductsList = () => {
+import { loadProducts, delProduct } from '../actions/productActions'
+import { addToCart } from '../actions/cartActions';
+const ProductsList = (props) => {
     document.title = 'Products List'
 
     const numberFormat = (value) =>
@@ -10,19 +12,16 @@ const ProductsList = () => {
         currency: 'INR'
     }).format(value);
 
-    const [products,setProducts] = useState([])
     useEffect(()=>{
-        fetch("https://api.mlab.com/api/1/databases/abcd/collections/products?apiKey=ClSj0HxNv3sPJwS3cZOsbZI9exWxVjqz")
-        .then(res=>res.json())
-        .then((data)=>{setProducts(data)})
-        
-    })
+           props.dispatch(loadProducts())   
+    },[props])
+
     return (
         <div className="container">
             <div className="row">
             {
-                products.length!==0?(
-                    products.map((p)=>{
+                props.ProductReducer.products?(
+                    props.ProductReducer.products.map((p)=>{
                         return(
                             <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12" key={p._id.$oid}>
                                 <div className="card">
@@ -31,11 +30,21 @@ const ProductsList = () => {
                                     <h4 className="card-title" title={p.productName}>{p.productName}</h4>
                                     <p className="product-price">{numberFormat(p.productPrice)}/-</p>
                                     <p className="card-text">Some example text some example text. John Doe is an architect and engineer</p>
-                                    <Link to={{pathname:"/productDetails",state:p}} className="btn btn-primary btn-sm">View More</Link>
-                                    <Link to={{pathname:"/editProduct",state:p}} className="btn btn-warning btn-sm">Edit</Link>
+                                    
                                     <div className="product-actions">
+                                        <div className="a_left">
+                                            <Link to={{pathname:"/productDetails",state:p}} className="btn btn-primary btn-sm">View More</Link>
+                                        </div>
+                                        <div className="a_right">
+                                            <p>
+                                                <Link to={{pathname:"/editProduct",state:p}} title="Edit Product"><i className="fas fa-edit"></i></Link> 
+                                                <span title="Delete Product" onClick={()=>{
+                                                    props.dispatch(delProduct(p._id.$oid))
+                                                }}><i className="fas fa-trash"></i></span>
+                                            </p>
+                                        </div>
                                           <ul>
-                                            <li title="Add to Cart"><i className="fas fa-cart-plus"></i></li>
+                                            <li title="Add to Cart" onClick={()=>{props.dispatch(addToCart(p))}}><i className="fas fa-cart-plus"></i></li>
                                             <li title="Add to Favorites"><i className="fas fa-heart"></i></li>
                                             <li title="View Details"><i className="fas fa-eye"></i></li>
                                             <li title="Add to Compare"><i className="fas fa-sync-alt"></i></li>
@@ -58,4 +67,4 @@ const ProductsList = () => {
     );
 };
 
-export default ProductsList;
+export default connect(store=>store)(ProductsList);

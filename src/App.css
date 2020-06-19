@@ -147,13 +147,29 @@ img.card-img-top {
   margin-top: 20px;
   width: 100%;
 }
+.product-actions p {
+  margin: 0px;
+  line-height: 32px;
+}
+.product-actions p span {
+  background-color: #0bab11;
+  padding: 3px 8px;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.product-actions p span:first-child {
+  margin-right: 10px;
+}
 .product-actions ul {
   display: flex;
-  margin: 0px;
+  margin: 15px 0px 0px 0px;
   padding-left: 0px;
   list-style-type: none;
   align-items: center;
   justify-content: center;
+  clear: both;
 }
 
 .product-actions ul li {
@@ -216,7 +232,13 @@ p.pd-price img {
   top: 12px;
   left: -23px;
 }
-
+.spinner {
+  text-align: center;
+  margin-top: 20px;
+}
+.spinner-border-sm {
+  margin-right: 5px;
+}
 
 
 

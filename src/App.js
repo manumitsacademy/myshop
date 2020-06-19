@@ -4,14 +4,15 @@ import Header from './components/Header';
 import { BrowserRouter,Route, Switch } from 'react-router-dom';
 import ProductPage from './pages/ProductPage';
 import AddProduct from './pages/AddProduct';
+import EditProduct from './pages/EditProductPage';
 import ProductsList from './pages/ProductsList';
 import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
 import {createStore,applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import Reducer from './reducers/Reducer';
-import thunk from 'redux-thunk'
 import EditProductPage from './pages/EditProductPage';
+import thunk from 'redux-thunk';
 const store = new createStore(Reducer,applyMiddleware(thunk))
 function App() {
   return (
@@ -31,6 +32,9 @@ function App() {
               </Route>
               <Route path="/addProduct">
                 <AddProduct></AddProduct>
+              </Route>
+              <Route path="/editProduct">
+                <EditProduct></EditProduct>
               </Route>
               <Route path="/productDetails">
                 <ProductDetails></ProductDetails>

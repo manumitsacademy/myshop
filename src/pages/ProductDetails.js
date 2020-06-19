@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useEffect,useState } from 'react';
 import { connect } from 'react-redux'
 import { useLocation,Link } from 'react-router-dom';
+import { addToCart } from '../actions/cartActions'
 const ProductDetails = (props) => {
     var {state:details} = useLocation();
-    console.log(props)
+    var [cartFlag,setCartFlag] = useState(false)
+    
+    useEffect(()=>{
+        console.log(details._id.$oid)
+        if(props.CartReducer.products){
+            props.CartReducer.products.find(function(p){
+                if(p._id.$oid===details._id.$oid){
+                    setCartFlag(true,function(){
+                        return true;
+                    });
+                }
+            })
+        }
+    },[details,props.CartReducer])
     return (
         <div className="container-fluid p-0">
             <div className="title-block">
@@ -24,13 +38,26 @@ const ProductDetails = (props) => {
                             <img className="img-thumbnail" src={details.productImage}  alt={details.productName}/>
                         </div>
                         {
+                            
                             props.CartReducer.cartStatus?
                             (<div className="pd-actions">
-                            <button className="btn btn-info mr-2" onClick={()=>{props.handleAddToCart(details)}}>Add To Cart</button>
+                                {
+                                    cartFlag?(
+                                        <Link to="/cart" className="btn btn-success mr-2">Go To Cart</Link>
+                                    ):(
+                                        <button className="btn btn-info mr-2" onClick={()=>{props.dispatch(addToCart(details))}}>Add To Cart</button>
+                                    )
+                                }
+
                                 <Link to={{pathname:"/checkout",state:details}} className="btn btn-secondary">Buy Now</Link>
                             </div>):
                             (
-                                <h1>Please Wait!!!...</h1>
+                                <div className="spinner">
+                                    <button className="btn btn-primary">
+                                        <span className="spinner-border spinner-border-sm"></span>
+                                        Loading...
+                                    </button>
+                                </div>
                             )
                         }
                         
@@ -57,17 +84,5 @@ const ProductDetails = (props) => {
         </div>
     );
 };
-function mapStateToProps(store){
-    return store
-}
-function mapDispatchToProps(dispatch){
-    return {
-        handleAddToCart:function(d){
-            dispatch({type:'CHANGE_CART_STATUS'})
-            setTimeout(()=>{
-                dispatch({type:'ADD_TO_CART',payload:d})
-            },2000)
-        }
-    }
-}
-export default connect(mapStateToProps,mapDispatchToProps)(ProductDetails);
+
+export default connect(store=>store)(ProductDetails);

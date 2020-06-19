@@ -40,7 +40,7 @@ const Header = (props) => {
                 <div className="profile ml-auto">
                     <ul>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/cart"><span><i class="fas fa-shopping-cart"></i></span>Cart</Link>
+                            <Link className="nav-link" to="/cart"><span><i className="fas fa-shopping-cart"></i></span>Cart</Link>
                             <span className="cart-count">{props.CartReducer.products.length}</span>
                         </li>
                         <li className="nav-item dropdown">

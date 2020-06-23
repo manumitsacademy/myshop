@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import { loadProducts, delProduct } from '../actions/productActions'
 import { addToCart } from '../actions/cartActions';
 const ProductsList = (props) => {
     document.title = 'Products List'
-
+    const [ minPrice,setMinPrice ] = useState(0);
+    const [ maxPrice,setMaxPrice ] = useState(0);
+    const maxRange = useRef();
+    const [ filteredProducts,setFilteredProducts ] = useState([])
     const numberFormat = (value) =>
     new Intl.NumberFormat('en-IN', {
         style: 'currency',
@@ -13,54 +16,79 @@ const ProductsList = (props) => {
     }).format(value);
 
     useEffect(()=>{
-           props.dispatch(loadProducts())   
-    },[props])
+            props.dispatch(loadProducts());
+            setFilteredProducts(props.ProductReducer.products)  
+    },[props.ProductReducer.products])
 
+    useEffect(()=>{
+        if(props.ProductReducer.products){
+            props.ProductReducer.products.sort((a,b)=>+a.productPrice<+b.productPrice?-1:1);
+            setMinPrice(props.ProductReducer.products[0].productPrice);
+            setMaxPrice(props.ProductReducer.products[props.ProductReducer.products.length-1].productPrice);
+        }
+        
+    },[props.ProductReducer.products])
+    
+    const filterPrice = ()=>{
+        var fp = filteredProducts.filter((p)=>{
+            return +p.productPrice<+maxRange.current.value?true:false
+        })
+        setFilteredProducts(fp);
+    }
     return (
-        <div className="container">
-            <div className="row">
-            {
-                props.ProductReducer.products?(
-                    props.ProductReducer.products.map((p)=>{
-                        return(
-                            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12" key={p._id.$oid}>
-                                <div className="card">
-                                    <img className="card-img-top" src={p.productImage} alt={p.productName} />
-                                    <div className="card-body">
-                                    <h4 className="card-title" title={p.productName}>{p.productName}</h4>
-                                    <p className="product-price">{numberFormat(p.productPrice)}/-</p>
-                                    <p className="card-text">Some example text some example text. John Doe is an architect and engineer</p>
-                                    
-                                    <div className="product-actions">
-                                        <div className="a_left">
-                                            <Link to={{pathname:"/productDetails",state:p}} className="btn btn-primary btn-sm">View More</Link>
+        <div className="fluid">
+            <div className="row no-gutters">
+            <div className="col-md-3">
+                <label for="points">Points (between {minPrice} and {maxPrice}):</label>
+                <input type="range" id="vol" name="vol" min={minPrice} max={maxPrice} ref={maxRange} onChange={filterPrice}/>
+            </div>
+            <div className="col-md-9">
+                <div className="row no-gutters">
+                {
+                    filteredProducts?(
+                        filteredProducts.map((p)=>{
+                            return(                            
+                                <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12" key={p._id.$oid}>
+                                    <div className="card">
+                                        <img className="card-img-top" src={p.productImage} alt={p.productName} />
+                                        <div className="card-body">
+                                        <h4 className="card-title" title={p.productName}>{p.productName}</h4>
+                                        <p className="product-price">{numberFormat(p.productPrice)}/-</p>
+                                        <p className="card-text">Some example text some example text. John Doe is an architect and engineer</p>
+                                        
+                                        <div className="product-actions">
+                                            <div className="a_left">
+                                                <Link to={{pathname:"/productDetails",state:p}} className="btn btn-primary btn-sm">View More</Link>
+                                            </div>
+                                            <div className="a_right">
+                                                <p>
+                                                    <Link to={{pathname:"/editProduct",state:p}} title="Edit Product"><i className="fas fa-edit"></i></Link> 
+                                                    <span title="Delete Product" onClick={()=>{
+                                                        props.dispatch(delProduct(p._id.$oid))
+                                                    }}><i className="fas fa-trash"></i></span>
+                                                </p>
+                                            </div>
+                                            <ul>
+                                                <li title="Add to Cart" onClick={()=>{props.dispatch(addToCart(p))}}><i className="fas fa-cart-plus"></i></li>
+                                                <li title="Add to Favorites"><i className="fas fa-heart"></i></li>
+                                                <li title="View Details"><i className="fas fa-eye"></i></li>
+                                                <li title="Add to Compare"><i className="fas fa-sync-alt"></i></li>
+                                            </ul>
                                         </div>
-                                        <div className="a_right">
-                                            <p>
-                                                <Link to={{pathname:"/editProduct",state:p}} title="Edit Product"><i className="fas fa-edit"></i></Link> 
-                                                <span title="Delete Product" onClick={()=>{
-                                                    props.dispatch(delProduct(p._id.$oid))
-                                                }}><i className="fas fa-trash"></i></span>
-                                            </p>
                                         </div>
-                                          <ul>
-                                            <li title="Add to Cart" onClick={()=>{props.dispatch(addToCart(p))}}><i className="fas fa-cart-plus"></i></li>
-                                            <li title="Add to Favorites"><i className="fas fa-heart"></i></li>
-                                            <li title="View Details"><i className="fas fa-eye"></i></li>
-                                            <li title="Add to Compare"><i className="fas fa-sync-alt"></i></li>
-                                          </ul>
-                                      </div>
                                     </div>
                                 </div>
-                            </div>
-                        )
-                    })
-                ):(<button className="btn btn-primary">
-                <span className="spinner-border spinner-border-sm"></span>
-                Loading..
-              </button>)
-                
-            }
+                            )
+                        })
+                    ):(<button className="btn btn-primary">
+                    <span className="spinner-border spinner-border-sm"></span>
+                    Loading..
+                </button>)
+                    
+                }
+                </div>
+            
+            </div>
             </div>
             
         </div>
